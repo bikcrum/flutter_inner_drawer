@@ -7,7 +7,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 
 /// Signature for the callback that's called when a [InnerDrawer] is
 /// opened or closed.
@@ -252,14 +251,11 @@ class InnerDrawerState extends State<InnerDrawer>
 
   /// get width of screen after initState
   void _updateWidth() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox? box =
           _drawerKey.currentContext!.findRenderObject() as RenderBox?;
       //final RenderBox box = context.findRenderObject();
-      if (box != null &&
-          box.hasSize &&
-          box.size != null &&
-          box.size.width > 300)
+      if (box != null && box.hasSize && box.size.width > 300)
         setState(() {
           _initWidth = box.size.width;
         });
@@ -297,6 +293,8 @@ class InnerDrawerState extends State<InnerDrawer>
       case InnerDrawerDirection.start:
         delta = -delta;
         break;
+      default:
+        break;
     }
     switch (Directionality.of(context)) {
       case TextDirection.rtl:
@@ -324,6 +322,8 @@ class InnerDrawerState extends State<InnerDrawer>
           break;
         case InnerDrawerDirection.start:
           visualVelocity = -visualVelocity;
+          break;
+        default:
           break;
       }
       switch (Directionality.of(context)) {
@@ -368,8 +368,9 @@ class InnerDrawerState extends State<InnerDrawer>
         return AlignmentDirectional.centerEnd;
       case InnerDrawerDirection.end:
         return AlignmentDirectional.centerStart;
+      default:
+        return null;
     }
-    return null;
   }
 
   /// Inner Alignment
@@ -379,8 +380,9 @@ class InnerDrawerState extends State<InnerDrawer>
         return AlignmentDirectional.centerStart;
       case InnerDrawerDirection.end:
         return AlignmentDirectional.centerEnd;
+      default:
+        return null;
     }
-    return null;
   }
 
   /// returns the left or right animation type based on InnerDrawerDirection
