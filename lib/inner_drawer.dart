@@ -61,7 +61,6 @@ class InnerDrawer extends StatefulWidget {
       this.innerDrawerCallback,
       this.onDragUpdate})
       : assert(leftChild != null || rightChild != null),
-        assert(scaffold != null),
         super(key: key);
 
   /// Left child
@@ -467,8 +466,7 @@ class InnerDrawerState extends State<InnerDrawer>
       );
 
     // Vertical translate
-    if (widget.offset != null &&
-        (widget.offset.top > 0 || widget.offset.bottom > 0)) {
+    if ((widget.offset.top > 0 || widget.offset.bottom > 0)) {
       final double translateY = MediaQuery.of(context).size.height *
           (widget.offset.top > 0 ? -widget.offset.top : widget.offset.bottom);
       container = Transform.translate(
@@ -545,7 +543,6 @@ class InnerDrawerState extends State<InnerDrawer>
 
   /// Trigger Area
   Widget? _trigger(AlignmentDirectional alignment, Widget? child) {
-    assert(alignment != null);
     final bool drawerIsStart = _position == InnerDrawerDirection.start;
     final EdgeInsets padding = MediaQuery.of(context).padding;
     double dragAreaWidth = drawerIsStart ? padding.left : padding.right;
@@ -585,7 +582,7 @@ class InnerDrawerState extends State<InnerDrawer>
     return Container(
       decoration: widget.backgroundDecoration ??
           BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).scaffoldBackgroundColor,
           ),
       child: Stack(
         alignment: _drawerInnerAlignment!,
